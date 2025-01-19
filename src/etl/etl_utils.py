@@ -74,9 +74,7 @@ def fetch_multiple_days(end_timestamp, n_days=10):
     return pd.concat(all_data, axis=0).drop("location", axis=1)
 
 
-def write_to_postgres(
-    df, create_table_query, insert_query
-):
+def write_to_postgres(df, create_table_query, insert_query):
     conn = psycopg2.connect(
         host=host, port=port, dbname=dbname, user=user, password=password
     )
@@ -131,11 +129,7 @@ def backfill_90days():
 
     df = fetch_multiple_days(end_timestamp, 90)
 
-    write_to_postgres(
-        df,
-        host,
-        port
-    )
+    write_to_postgres(df, host, port)
 
 
 def monthly_insert():
@@ -151,11 +145,7 @@ def monthly_insert():
 
     df = fetch_multiple_days(end_timestamp, 30)
 
-    write_to_postgres(
-        df,
-        host,
-        port
-    )
+    write_to_postgres(df, host, port)
 
 
 def monthly_upsert():
